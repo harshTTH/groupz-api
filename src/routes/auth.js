@@ -1,6 +1,6 @@
 import {Router} from 'express';
 var router = Router();
-import User from './models/User';
+import User from '../models/User';
 
 router.post('/api/auth',(req,res)=>{
     let {credentials} = req.body;

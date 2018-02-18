@@ -15,7 +15,8 @@
     "dotenv": "^5.0.0",
     "express": "^4.16.2",
     "jsonwebtoken": "^8.1.1",
-    "mongoose": "^5.0.6"
+    "mongoose": "^5.0.6",
+    "mongoose-unique-validator": "^2.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
