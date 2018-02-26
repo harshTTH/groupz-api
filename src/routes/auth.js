@@ -29,4 +29,5 @@ router.post('/api/auth/confirmation',(req,res)=>{
     else res.status(400).json({error:"Invalid Token!"});
   })
 })
+
 export default router;

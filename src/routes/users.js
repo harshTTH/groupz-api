@@ -23,5 +23,6 @@ router.post('/api/resend',(req,res)=>{
     sendConfirmationEmail(user);
     res.json({status:true});
   })
-})
+}
+
 export default router;

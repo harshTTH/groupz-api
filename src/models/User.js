@@ -27,10 +27,13 @@ const schema = new mongoose.Schema(
             type:Boolean,
             required:true,
             default:false
+<<<<<<< HEAD
         },
         confirmationToken:{
           type:String,
           default:''
+=======
+>>>>>>> 50a135fa57d58ec6ee02626f5490c07cdbe01b5e
         }
 },{timestamps:true});
 
@@ -39,6 +42,7 @@ schema.methods.isValidPassword = function(password){
 }
 
 schema.methods.setPassword = function(password){
+<<<<<<< HEAD
     this.passwordHash = bcrypt.hashSync(password,10);
 }
 
@@ -48,11 +52,19 @@ schema.methods.setConfirmationToken = function setConfirmationToken(){
 
 schema.methods.getConfirmationEmail = function getConfirmationEmail(){
   return `${process.env.HOST}/confirmation/${this.confirmationToken}`
+=======
+    this.passwordHash = bcrypt.hashSync(password,10); 
+>>>>>>> 50a135fa57d58ec6ee02626f5490c07cdbe01b5e
 }
 schema.methods.generateJWT = function(){
     return jwt.sign({
         email:this.email,
+<<<<<<< HEAD
         confirmed:this.confirmed,
+=======
+        name:this.name,
+        mobile:this.mobile
+>>>>>>> 50a135fa57d58ec6ee02626f5490c07cdbe01b5e
     },process.env.TOKEN_KEY);
 };
 
