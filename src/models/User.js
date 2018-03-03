@@ -27,13 +27,17 @@ const schema = new mongoose.Schema(
             type:Boolean,
             required:true,
             default:false
-<<<<<<< HEAD
         },
         confirmationToken:{
           type:String,
           default:''
-=======
->>>>>>> 50a135fa57d58ec6ee02626f5490c07cdbe01b5e
+        },
+        passResetToken:{
+          type:String,
+          default:''
+        },
+        socket:{
+          type:Array,
         }
 },{timestamps:true});
 
@@ -42,7 +46,6 @@ schema.methods.isValidPassword = function(password){
 }
 
 schema.methods.setPassword = function(password){
-<<<<<<< HEAD
     this.passwordHash = bcrypt.hashSync(password,10);
 }
 
@@ -52,22 +55,27 @@ schema.methods.setConfirmationToken = function setConfirmationToken(){
 
 schema.methods.getConfirmationEmail = function getConfirmationEmail(){
   return `${process.env.HOST}/confirmation/${this.confirmationToken}`
-=======
-    this.passwordHash = bcrypt.hashSync(password,10); 
->>>>>>> 50a135fa57d58ec6ee02626f5490c07cdbe01b5e
 }
 schema.methods.generateJWT = function(){
     return jwt.sign({
         email:this.email,
-<<<<<<< HEAD
         confirmed:this.confirmed,
-=======
         name:this.name,
         mobile:this.mobile
->>>>>>> 50a135fa57d58ec6ee02626f5490c07cdbe01b5e
     },process.env.TOKEN_KEY);
 };
 
+schema.methods.generateResetPasswordLink = function(){
+  return `${process.env.HOST}/reset/${this.passResetToken}`;
+};
+
+schema.methods.generateResetToken = function(){
+  const resetToken = jwt.sign({
+                          _id:this._id
+                          },process.env.TOKEN_KEY,
+                          {expiresIn:"1h"});
+  return resetToken;
+}
 schema.methods.toAuthJWT = function(){
     return {
         email:this.email,

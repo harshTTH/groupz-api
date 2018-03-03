@@ -22,5 +22,18 @@ export const sendConfirmationEmail = (user) =>{
           Welcome to Groupz, Please verify your email
           ${user.getConfirmationEmail()}    `
   };
+  transport.sendMail(email,(err,info)=>{if(err)console.log(err)});
+}
+
+export const sendResetPasswordLink = (user) =>{
+  const transport = getTransport();
+  let email = {
+        from: from,
+        to: user.email,
+        subject:"Reset Password",
+        text: `
+          Follow link for further instructions :
+          ${user.generateResetPasswordLink()}    `
+  };
   transport.sendMail(email);
 }
