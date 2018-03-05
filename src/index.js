@@ -8,6 +8,7 @@ import users from './routes/users';
 import members from './routes/members';
 import socket from 'socket.io';
 import User from './models/User';
+import Message from './models/Message';
 
 dotenv.config();
 const app = express();
@@ -42,5 +43,25 @@ io.on('connect',(socket)=>{
         socket.broadcast.emit('statusOff',user.email);
       }
     })
+  })
+
+  socket.on('msgSend',(data)=>{
+    const message = new Message(data);
+    message.save((err)=>{
+      if(!err){
+        console.log(message.createdAt)
+        io.sockets.emit('msgRec',{
+          _id:message._id,
+          name:message.name,
+          message:message.message,
+          createdAt:message.createdAt
+        });
+      }
+    });
+  });
+
+  socket.on('typing',(name)=>{
+    console.log(`${name} is typing ....`)
+    socket.broadcast.emit('typing',name);
   })
 })

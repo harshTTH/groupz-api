@@ -1,5 +1,6 @@
 import {Router} from 'express';
 import User from '../models/User';
+import Message from '../models/Message';
 var router = Router();
 
 router.post('/fetch',(req,res)=>{
@@ -10,4 +11,16 @@ router.post('/fetch',(req,res)=>{
   });
 })
 
+router.post('/fetch/msg',(req,res)=>{
+  User.find({token:req.body.token})
+  .then(user=>{
+    if(user){
+      Message.find({},{updatedAt:0})
+      .then(messages=>res.json({messages}))
+    }else{
+      res.status(401).json({});
+    }
+  })
+  .catch(()=>res.status(401).json({}))
+})
 export default router;
